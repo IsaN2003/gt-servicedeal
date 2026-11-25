@@ -1,0 +1,50 @@
+# Customer personas (design.md, section 2)
+# All personas use the same 105 MW EIA reference aeroderivative plant.
+
+plant_mw: 105
+
+personas:
+  industrial:
+    name: "Industrial / oil and gas site"
+    segment: industrial
+    duty_cycle: industrial
+    hours_per_year: 8000
+    starts_per_year: 10
+    usage_uncertainty: 0.05
+    downtime_cost_per_hour: 150000
+    budget_multiplier: 1.6
+    priorities: "High availability, broad scope, fixed predictable fee"
+
+  midmerit:
+    name: "Utility (mid-merit)"
+    segment: utility
+    duty_cycle: mid-merit
+    hours_per_year: 3500
+    starts_per_year: 200
+    usage_uncertainty: 0.30
+    downtime_cost_per_hour: 10000
+    budget_multiplier: 1.3
+    priorities: "Low cost, hybrid pricing, flexibility"
+
+  peaking:
+    name: "Utility (peaking)"
+    segment: utility
+    duty_cycle: peaking
+    hours_per_year: 1000
+    starts_per_year: 120
+    usage_uncertainty: 0.50
+    downtime_cost_per_hour: 20000
+    budget_multiplier: 1.3
+    priorities: "Per-hour pricing, low fee, reliable starts"
+
+  datacentre:
+    name: "Data centre (prime power)"
+    segment: data_centre
+    duty_cycle: baseload
+    hours_per_year: 8300
+    starts_per_year: 15
+    usage_uncertainty: 0.05
+    downtime_cost_per_hour: 300000
+    budget_multiplier: 1.85
+    priorities: "Very high availability, lease engine, strong penalty cap"
+ 

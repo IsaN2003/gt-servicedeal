@@ -1,0 +1,66 @@
+# Contract terms, fixed settings and risk rules (design.md, sections 1, 4, 5, 8)
+
+# --- Section 1: allowed values for each negotiable term ---
+terms:
+  annual_fee_m:            # $ millions, year 1
+    min: 1.5
+    max: 12.0
+    step: 0.1
+  pricing_model: [fixed, hybrid, per_hour]
+  escalation: [0.020, 0.025, 0.030, 0.035, 0.040, 0.045, 0.050]
+  length_years: [5, 7, 10, 15]
+  availability: [95.0, 95.5, 96.0, 96.5, 97.0, 97.5, 98.0]
+  penalty_cap: [0.05, 0.10, 0.15, 0.20, 0.25, 0.30]
+  # scope: repairs / engines / rotables, each yes/no, at least one yes
+  # lease_engine: yes/no
+
+# Share of the fee that changes with actual hours, by pricing model
+fee_variable_share:
+  fixed: 0.0
+  hybrid: 0.5
+  per_hour: 0.9
+
+# Share of full maintenance cost covered by each service type
+scope_cost_share:
+  engines: 0.50
+  rotables: 0.25
+  repairs: 0.25
+
+# --- Provider cost (EIA reference aeroderivative plant, 2022 $) ---
+eia:
+  fixed_om_per_kw_year: 18.35
+  variable_om_per_mwh: 5.29
+
+# --- Section 4: fixed settings ---
+cost_inflation: 0.035
+discount_rate: 0.08
+availability_cost_per_point: 0.04     # +4% of service cost per 1% above 95%
+miss_probability:                     # chance the provider misses the guarantee
+  95.0: 0.100
+  95.5: 0.175
+  96.0: 0.250
+  96.5: 0.325
+  97.0: 0.400
+  97.5: 0.475
+  98.0: 0.550
+lease_engine_cost_share: 0.05         # % of full maintenance cost per year
+lease_engine_availability_bonus: 1.0  # percentage points
+max_effective_availability: 99.0
+uncovered_cost_multiplier: 1.10
+risk_weight: 0.5
+
+# Walk-away option (section 2)
+walkaway:
+  cost_share: 1.00
+  availability: 92.0
+
+# --- Section 5: risk reviewer rules ---
+risk_rules:
+  max_penalty_cap: 0.20
+  min_margin: 0.10
+  long_contract_years: 10
+  min_escalation_long: 0.025
+  top_availability: 98.0              # only allowed with full scope
+
+# --- Section 8: negotiation protocol ---
+max_rounds: 12
