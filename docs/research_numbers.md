@@ -29,6 +29,24 @@ These are total plant O&M figures. In the simulation they serve as the
 **provider's cost baseline** for a full-scope contract. A limited-scope contract
 covers only part of this. [Assumption]
 
+### Start-related wear
+
+| Item | Value | Type |
+|---|---|---|
+| Cost per start, aeroderivative gas turbine (median warm start, lower bound, excluding fuel) | $24 per MW of capacity (2011 $) | [Source] NREL/Intertek *Power Plant Cycling Costs* (2012), Table 1-1 |
+| Same, in 2022 $ (to match EIA) | ≈ $31 per MW | [Assumption] converted with US CPI (×1.30) |
+| Per start for a 105 MW plant | ≈ $3,300 | Calculated |
+
+| Duty cycle | Starts/year | Start-related wear per year |
+|---|---|---|
+| Baseload | 15 | ≈ $0.05M |
+| Mid-merit | 200 | ≈ $0.65M |
+| Peaking | 120 | ≈ $0.39M |
+| Industrial | 10 | ≈ $0.03M |
+
+This is added to the EIA O&M estimate above. It matters most for mid-merit and
+peaking units, which start often.
+
 ## 2. Operating profiles by duty cycle
 
 | Duty cycle | Hours/year | Starts/year | Type |
@@ -76,6 +94,7 @@ Personas take their profile from their duty cycle. Persona 1 uses the
 - All [Assumption] values get sensitivity checks on Day 4.
 
 ## Sources
+- NREL/Intertek APTECH, Power Plant Cycling Costs (2012), Table 1-1: https://www.nrel.gov/docs/fy12osti/55433.pdf
 - EIA, Cost and Performance Characteristics of New Generating Technologies (AEO assumptions): https://www.eia.gov/aeo/assumptions/pdf/elec_cost_perf.pdf
 - EIA, combined-cycle capacity factors by region and age (2021): https://www.eia.gov/todayinenergy/detail.php?id=48036
 - EIA, natural gas combustion turbine use and prices (2013): https://www.eia.gov/todayinenergy/detail.php?id=13191

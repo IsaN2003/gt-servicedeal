@@ -13,15 +13,18 @@ PLANT_MW = load_personas()["plant_mw"]
 
 
 def persona_economics(p: dict) -> dict:
-    """Numbers calculated from a persona: provider cost, budget, walk-away cost."""
+    """Numbers calculated from a persona: provider cost (hours + starts), budget, walk-away cost."""
     kw = PLANT_MW * 1000
     mwh = PLANT_MW * p["hours_per_year"]
     fixed = kw * S["eia"]["fixed_om_per_kw_year"]
-    variable = mwh * S["eia"]["variable_om_per_mwh"]
+    hours_cost = mwh * S["eia"]["variable_om_per_mwh"]
+    starts_cost = PLANT_MW * S["start_cost_per_mw"] * p["starts_per_year"]
+    variable = hours_cost + starts_cost                  # both grow with how much the unit is used
     full_cost = fixed + variable                         # C in design.md
     walk_downtime = (1 - S["walkaway"]["availability"] / 100) * p["hours_per_year"] * p["downtime_cost_per_hour"]
     return {
         "full_cost": full_cost,
+        "starts_cost": starts_cost,
         "variable_cost_share": variable / full_cost,
         "max_budget": full_cost * p["budget_multiplier"],
         "walkaway_cost_year1": S["walkaway"]["cost_share"] * full_cost + walk_downtime,
@@ -121,13 +124,14 @@ if __name__ == "__main__":
     for k, v in persona_economics(midmerit).items():
         print(f"  {k}: {v:,.2f}")
 
+    def full_scope_offer(fee):
+        return Offer(annual_fee_m=fee, pricing_model="hybrid", escalation=0.035,
+                     length_years=7, availability=96.0, penalty_cap=0.10,
+                     repairs=True, engines=True, rotables=True, lease_engine=False)
+
     examples = {
-        "Agents' example deal": Offer(annual_fee_m=4.8, pricing_model="hybrid", escalation=0.035,
-                                      length_years=7, availability=96.0, penalty_cap=0.10,
-                                      repairs=True, engines=True, rotables=True, lease_engine=False),
-        "Better deal found by benchmark": Offer(annual_fee_m=4.9, pricing_model="hybrid", escalation=0.04,
-                                                length_years=10, availability=97.0, penalty_cap=0.05,
-                                                repairs=True, engines=True, rotables=True, lease_engine=True),
+        "Example A (works for both sides)": full_scope_offer(5.5),
+        "Example B (too cheap for the provider)": full_scope_offer(5.2),
     }
     for name, offer in examples.items():
         prov = provider_score(offer, midmerit)

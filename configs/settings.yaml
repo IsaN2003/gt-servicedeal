@@ -31,6 +31,11 @@ eia:
   fixed_om_per_kw_year: 18.35
   variable_om_per_mwh: 5.29
 
+# Start-related wear (NREL/Intertek "Power Plant Cycling Costs", 2012, Table 1-1):
+# aeroderivative CT, median warm start, lower bound = $24 per MW of capacity (2011 $),
+# excluding fuel. Converted to 2022 $ with US CPI (x1.30) to match the EIA figures.
+start_cost_per_mw: 31
+
 # --- Section 4: fixed settings ---
 cost_inflation: 0.035
 discount_rate: 0.08
