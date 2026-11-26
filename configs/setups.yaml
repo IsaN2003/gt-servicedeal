@@ -1,0 +1,56 @@
+# Experiment setups (design.md, section 9)
+# Each setup switches agents and tools on or off, and chooses the model.
+#
+#   pricing_analyst:     sales asks a separate pricing analyst agent for profit and margin
+#   sales_calculator:    sales has the profit calculator itself (only used when there is no analyst)
+#   risk_reviewer:       every sales offer is checked against the company rules before the customer sees it
+#   customer_calculator: the customer can check its savings vs its alternative
+
+setups:
+  A:
+    description: "Baseline: full team"
+    model: claude-haiku-5-5
+    pricing_analyst: true
+    sales_calculator: false
+    risk_reviewer: true
+    customer_calculator: true
+
+  B:
+    description: "No risk reviewer"
+    model: claude-haiku-5-5
+    pricing_analyst: true
+    sales_calculator: false
+    risk_reviewer: false
+    customer_calculator: true
+
+  C:
+    description: "No pricing analyst and no calculator: sales has no cost information"
+    model: claude-haiku-5-5
+    pricing_analyst: false
+    sales_calculator: false
+    risk_reviewer: true
+    customer_calculator: true
+
+  C2:
+    description: "Optional: no pricing analyst, but sales has the calculator itself (Day 2 style)"
+    model: claude-haiku-5-5
+    pricing_analyst: false
+    sales_calculator: true
+    risk_reviewer: true
+    customer_calculator: true
+
+  D:
+    description: "Stronger model: full team on Claude Sonnet"
+    model: claude-sonnet-5-5
+    pricing_analyst: true
+    sales_calculator: false
+    risk_reviewer: true
+    customer_calculator: true
+
+  E:
+    description: "Optional: customer has no calculator"
+    model: claude-haiku-5-5
+    pricing_analyst: true
+    sales_calculator: false
+    risk_reviewer: true
+    customer_calculator: false
